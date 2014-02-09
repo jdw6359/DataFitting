@@ -25,6 +25,17 @@ int main(int argc, char *argv[]){
 	while (DataPoints(&X, &Y)==1){
 		/* printf("Data Points\nX: %f\nY: %f\n", X, Y);*/
 
+		/* Initialize Data Object */
+		Data point;
+		point.X=X;
+		point.Y=Y;
+		printf("Point Created\n");
+		PushToDArray(&array, &point);
+
+
+
+		/* Add data point to Array */
+
 
 	}
 

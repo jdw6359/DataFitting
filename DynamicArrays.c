@@ -35,3 +35,12 @@ void CreateDArray(DArray *DArrayPtr, unsigned int InitialSize){
 		printf("Memory allocated!\n");
 	}
 }
+
+
+
+/* This function will add the given Data struct to the Dynamic Array */
+unsigned int PushToDArray(DArray *DArrayPtr, Data *PayloadPtr){
+
+	printf("Payload Values******\nX: %f\nY: %f\n", PayloadPtr->X, PayloadPtr->Y);
+
+}
