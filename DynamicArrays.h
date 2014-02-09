@@ -17,8 +17,11 @@
 /** Data typemark to store payload: Modify according to application  ***/
 typedef struct Data
   {
-   /* fill in the details here /*  
+	/* An Instance of Data represents a point, having both an x and y value */
+	double X;
+	double Y;
   } Data;
+
 /************** Nothing else in the module needs to be modified *************/
 
 /* Growth Policy : Constant Size, modify as necessary */
