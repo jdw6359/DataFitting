@@ -5,6 +5,7 @@
 
 #define INITIAL_CAPACITY 0
 
+/* Function that will compute and store the coefficients A and B */
 void ComputeCoefficients(double *A, double *B, DArray *DArrayPtr){
 
 	/* Initialize variables to hold computations */
@@ -13,10 +14,10 @@ void ComputeCoefficients(double *A, double *B, DArray *DArrayPtr){
 	double S_X = 0.0;
 	double S_Y = 0.0;
 
-
 	/* Variable to keep track of index while looping */
 	int counter;
 
+	/* Increment through array and compute coefficients */
 	for(counter=0;counter < DArrayPtr->EntriesUsed; counter++){
 
 		/* Increment temporary sums of X Y combonations */
@@ -32,65 +33,64 @@ void ComputeCoefficients(double *A, double *B, DArray *DArrayPtr){
 		/* Compute the linear coefficient */
 		*A = (((DArrayPtr->EntriesUsed * S_XY) - (S_X * S_Y)) / ((DArrayPtr->EntriesUsed * S_XX) - (S_X * S_X)));
 
-
-
 	}
-
-
-
-
-
+	/* End for loop */
 }
+/* End ComputerCoefficients() */
 
-
-
-
-
+/* Main method */
 int main(int argc, char *argv[]){
 
-	/* Initialize double values X and Y that will store the point values
-	returned from the call to Data Points */
-	double X, Y;
+	/* Check to make sure there are no additional cmdline args */
+	if(argc < 2){
 
-	/* Initialize double values A and B that represent the coefficients for
-	the line of best fit. Passed into ComputeCoefficients by refence */
-	double A, B;
+		/* Initialize double values X and Y that will store the point values
+		returned from the call to Data Points */
+		double X, Y;
 
-	/* Variable that represents the index of the last element added to Payload */
-	unsigned int Index;
+		/* Initialize double values A and B that represent the coefficients for
+		the line of best fit. Passed into ComputeCoefficients by refence */
+		double A, B;
 
-	/* Initialize variable for Dynamic Array */
-	DArray array;
+		/* Variable that represents the index of the last element added to Payload */
+		unsigned int Index;
 
-	/* Call CreateDArray to initialize array */
-	CreateDArray(&array, INITIAL_CAPACITY);
+		/* Initialize variable for Dynamic Array */
+		DArray array;
 
-	while (DataPoints(&X, &Y)==1){
+		/* Call CreateDArray to initialize array */
+		CreateDArray(&array, INITIAL_CAPACITY);
 
-		/* Initialize Data Object With values from DataPoints function */
-		Data point;
-		point.X=X;
-		point.Y=Y;
+		/* Gather X and Y values while DataPoints() supplies values */
+		while (DataPoints(&X, &Y)==1){
 
-		/* Send the data point to the dynamic array */
-		Index=PushToDArray(&array, &point);
+			/* Initialize Data Object With values from DataPoints function */
+			Data point;
+			point.X=X;
+			point.Y=Y;
 
-		/* Add data point to Array */
+			/* Send the data point to the dynamic array */
+			Index=PushToDArray(&array, &point);
+
+		}
+
+		/* Compute the coefficients (Stores both A AND B) */
+		ComputeCoefficients(&A, &B, &array);
+
+		/* Produce Output */
+		printf("The line is: Y= %f * X + %f\n", A, B);
+		printf("There were %d points in the data set\n", array.EntriesUsed);
+
+		/* Destroy the DArray object, and free associated memory */
+		DestroyDArray(&array);
+
+	}else{
+
+		/* Improper amount of cmdline args entered, alert user */
+		printf("Usage: %s\n", argv[0]);
+
 	}
-
-	printf("Index is %d!\n", Index);
-	printf("Values at index!!!!!!\nX: %f\nY: %f\n", array.Payload[Index].X, array.Payload[Index].Y);
-
-	/* Compute the coefficients (Stores both A AND B) */
-	ComputeCoefficients(&A, &B, &array);
-
-	printf("The line is: Y= %f * X + %f\n", A, B);
-	printf("There were %d points in the data set\n", array.EntriesUsed);
-
-
-
-
-	DestroyDArray(&array);
+	/* End Cmdline args check */
 
 	/* Return 1 to the operating system */
 	return 1;
