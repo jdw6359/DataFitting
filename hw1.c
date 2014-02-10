@@ -3,7 +3,7 @@
 #include "data.h"
 #include "DynamicArrays.h"
 
-#define InitialCapacity 20
+#define INITIAL_CAPACITY 20
 
 int main(int argc, char *argv[]){
 
@@ -15,7 +15,7 @@ int main(int argc, char *argv[]){
 	DArray array;
 
 	/* Call CreateDArray to initialize array */
-	CreateDArray(&array, InitialCapacity);
+	CreateDArray(&array, INITIAL_CAPACITY);
 
 	/* output from CreateDArray */
 	printf("Entries Used: %d\n", array.EntriesUsed);
@@ -23,14 +23,15 @@ int main(int argc, char *argv[]){
 
 
 	while (DataPoints(&X, &Y)==1){
-		/* printf("Data Points\nX: %f\nY: %f\n", X, Y);*/
 
-		/* Initialize Data Object */
+		/* Initialize Data Object With values from DataPoints function */
 		Data point;
 		point.X=X;
 		point.Y=Y;
-		printf("Point Created\n");
+
+		/* Send the data point to the dynamic array */
 		PushToDArray(&array, &point);
+
 
 
 

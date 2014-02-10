@@ -41,6 +41,31 @@ void CreateDArray(DArray *DArrayPtr, unsigned int InitialSize){
 /* This function will add the given Data struct to the Dynamic Array */
 unsigned int PushToDArray(DArray *DArrayPtr, Data *PayloadPtr){
 
-	printf("Payload Values******\nX: %f\nY: %f\n", PayloadPtr->X, PayloadPtr->Y);
+
+	/* Does the array need to be made larger? */
+	if(DArrayPtr->EntriesUsed==DArrayPtr->Capacity){
+
+		/* Increase the size of the dynamic array */
+		DArrayPtr->Capacity += GROWTH_AMOUNT;
+
+		printf("Capacity Increased to %d\n", DArrayPtr->Capacity);
+
+		/* Reallocate storage for the array elements using a larger size */
+		DArrayPtr->Payload=realloc(DArrayPtr->Payload, DArrayPtr->Capacity * sizeof(Data));
+
+
+	}
+
+	/* Copy the point value into the array where the insertion index is pointing */
+	memcpy(&(DArrayPtr->Payload[DArrayPtr->EntriesUsed]), PayloadPtr, sizeof(Data));
+
+	printf("Payload Values******\nX: %f\nY: %f\n\n\n", PayloadPtr->X, PayloadPtr->Y);
+
+
+	/* Increment the number of elements used in the array */
+	DArrayPtr->EntriesUsed++;
+
+	/* return the index of the last element inserted */
+	return (DArrayPtr->EntriesUsed-1);
 
 }
