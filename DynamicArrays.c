@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "DynamicArrays.h"
+
 
 /* Implementation of CreateDArray */
 void CreateDArray(DArray *DArrayPtr, unsigned int InitialSize){
@@ -57,8 +59,6 @@ unsigned int PushToDArray(DArray *DArrayPtr, Data *PayloadPtr){
 		/* Increase the size of the dynamic array */
 		DArrayPtr->Capacity += GROWTH_AMOUNT;
 
-		printf("Capacity Increased to %d\n", DArrayPtr->Capacity);
-
 		/* Reallocate storage for the array elements using a larger size */
 		DArrayPtr->Payload=realloc(DArrayPtr->Payload, DArrayPtr->Capacity * sizeof(Data));
 
@@ -78,14 +78,14 @@ unsigned int PushToDArray(DArray *DArrayPtr, Data *PayloadPtr){
 	/* Copy the point value into the array where the insertion index is pointing */
 	memcpy(&(DArrayPtr->Payload[DArrayPtr->EntriesUsed]), PayloadPtr, sizeof(Data));
 
-	printf("Payload Values******\nX: %f\nY: %f\n\n\n", PayloadPtr->X, PayloadPtr->Y);
+	/* printf("Payload Values******\nX: %f\nY: %f\n\n\n", PayloadPtr->X, PayloadPtr->Y); */
 
 
 	/* Increment the number of elements used in the array */
 	DArrayPtr->EntriesUsed++;
 
 	/* return the index of the last element inserted */
-	return (DArrayPtr->EntriesUsed-1);
+	return (unsigned int)(DArrayPtr->EntriesUsed-1);
 
 }
 
@@ -104,6 +104,6 @@ void DestroyDArray(DArray *DArrayPtr){
 	/* Set Payload to NULL */
 	DArrayPtr->Payload=NULL;
 
-	printf("DArray destroyed and memory freed!");
+	printf("DArray destroyed and memory freed!\n");
 
 }
