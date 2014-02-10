@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include "DynamicArrays.h"
 
-/* This function will initialize the state of the dynamic array
-header, and will allocate memory if necessary (dependant on InitialSize) */
+/* Implementation of CreateDArray */
 void CreateDArray(DArray *DArrayPtr, unsigned int InitialSize){
 	printf("initialize called\n");
 
@@ -32,13 +31,23 @@ void CreateDArray(DArray *DArrayPtr, unsigned int InitialSize){
 		/* Allocate space to store payload according to Data struct */
 		DArrayPtr->Payload=(Data *)malloc(DArrayPtr->Capacity * sizeof(Data));
 
+		/* Check to ensure that memory for Payload was allocated */
+		if(DArrayPtr->Payload == NULL){
+
+			/* Write to standard error */
+			fprintf(stderr, "CreateDArray(): malloc() failed!\n");
+
+			/* Flush Standard Error */
+			fflush(stderr);
+
+		}
+
 		printf("Memory allocated!\n");
 	}
 }
 
 
-
-/* This function will add the given Data struct to the Dynamic Array */
+/* Implementation of PushToDArray */
 unsigned int PushToDArray(DArray *DArrayPtr, Data *PayloadPtr){
 
 
@@ -52,6 +61,16 @@ unsigned int PushToDArray(DArray *DArrayPtr, Data *PayloadPtr){
 
 		/* Reallocate storage for the array elements using a larger size */
 		DArrayPtr->Payload=realloc(DArrayPtr->Payload, DArrayPtr->Capacity * sizeof(Data));
+
+		/* Check to make sure that memory was propertly reallocated */
+		if(DArrayPtr->Payload == NULL){
+
+			/* Write to standard error */
+			fprintf(stderr, "PushToDArray(): realloc() failed!\n");
+
+			/* Flush Standard Error */
+			fflush(stderr);
+		}
 
 
 	}
@@ -67,5 +86,24 @@ unsigned int PushToDArray(DArray *DArrayPtr, Data *PayloadPtr){
 
 	/* return the index of the last element inserted */
 	return (DArrayPtr->EntriesUsed-1);
+
+}
+
+/* Implementation of DestroyDArray */
+void DestroyDArray(DArray *DArrayPtr){
+
+	/* Set Entries Used to zero */
+	DArrayPtr->EntriesUsed=0;
+
+	/* Set Capacity to zero */
+	DArrayPtr->Capacity=0;
+
+	/* De-Allocate the storage for the array elements */
+	free(DArrayPtr->Payload);
+
+	/* Set Payload to NULL */
+	DArrayPtr->Payload=NULL;
+
+	printf("DArray destroyed and memory freed!");
 
 }

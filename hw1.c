@@ -40,6 +40,8 @@ int main(int argc, char *argv[]){
 
 	}
 
+	DestroyDArray(&array);
+
 	/* Return 1 to the operating system */
 	return 1;
 }
