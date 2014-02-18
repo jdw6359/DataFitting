@@ -1,3 +1,21 @@
+/****************************************************************/
+/* Josh Woodward						*/
+/* jdw6359@rit.edu						*/
+/* Applied Programming -CMPE380					*/
+/* Spring 2014							*/
+/*								*/
+/* Homework 1							*/
+/*								*/
+/* Implementation of DynamicArrays module. Capable of		*/
+/* storing data and growing as necessary (Growth Polocy is to	*/
+/* increase storage by 100 units)                              	*/
+/****************************************************************/
+
+
+
+
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -68,6 +86,7 @@ unsigned int PushToDArray(DArray *DArrayPtr, Data *PayloadPtr){
 	return (unsigned int)(DArrayPtr->EntriesUsed-1);
 }
 
+
 /* Implementation of DestroyDArray */
 void DestroyDArray(DArray *DArrayPtr){
 
@@ -82,7 +101,5 @@ void DestroyDArray(DArray *DArrayPtr){
 
 	/* Set Payload to NULL */
 	DArrayPtr->Payload=NULL;
-
-	printf("DArray destroyed and memory freed!\n");
 
 }

@@ -1,3 +1,17 @@
+/****************************************************************/
+/* Josh Woodward						*/
+/* jdw6359@rit.edu						*/
+/* Applied Programming CMPE - 380				*/
+/* Spring 2014							*/
+/*								*/
+/* Homework 1							*/
+/*							        */
+/* Program to take randomly generated data points and generate  */
+/* line of best fit ( Utilizes Dynamic Array )                  */
+/****************************************************************/
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "data.h"
@@ -5,7 +19,9 @@
 
 #define INITIAL_CAPACITY 0
 
-/* Function that will compute and store the coefficients A and B */
+/* Function that will compute and store the coefficients A and B
+   Function is passed a reference to A and B, as well as a reference
+   to the DArray struct */
 void ComputeCoefficients(double *A, double *B, DArray *DArrayPtr){
 
 	/* Initialize variables to hold computations */
@@ -20,7 +36,7 @@ void ComputeCoefficients(double *A, double *B, DArray *DArrayPtr){
 	/* Increment through array and compute coefficients */
 	for(counter=0;counter < DArrayPtr->EntriesUsed; counter++){
 
-		/* Increment temporary sums of X Y combonations */
+		/* Increment temporary sums of X Y combinations */
 		S_XX += DArrayPtr -> Payload[counter].X * DArrayPtr -> Payload[counter].X;
 		S_XY += DArrayPtr -> Payload[counter].X * DArrayPtr -> Payload[counter].Y;
 		S_X += DArrayPtr -> Payload[counter].X;
@@ -38,6 +54,7 @@ void ComputeCoefficients(double *A, double *B, DArray *DArrayPtr){
 }
 /* End ComputerCoefficients() */
 
+
 /* Main method */
 int main(int argc, char *argv[]){
 
@@ -52,8 +69,7 @@ int main(int argc, char *argv[]){
 		the line of best fit. Passed into ComputeCoefficients by refence */
 		double A, B;
 
-		/* Variable that represents the index of the last element added to Payload */
-		unsigned int Index;
+		/* Variable that represents the index of the last element added to Payload  */
 
 		/* Initialize variable for Dynamic Array */
 		DArray array;
@@ -70,7 +86,7 @@ int main(int argc, char *argv[]){
 			point.Y=Y;
 
 			/* Send the data point to the dynamic array */
-			Index=PushToDArray(&array, &point);
+			PushToDArray(&array, &point);
 
 		}
 
@@ -78,8 +94,8 @@ int main(int argc, char *argv[]){
 		ComputeCoefficients(&A, &B, &array);
 
 		/* Produce Output */
-		printf("The line is: Y= %f * X + %f\n", A, B);
-		printf("There were %d points in the data set\n", array.EntriesUsed);
+		printf("\nThe line is: Y = %f * X + %f\n", A, B);
+		printf("There were %d points in the data set\n\n", array.EntriesUsed);
 
 		/* Destroy the DArray object, and free associated memory */
 		DestroyDArray(&array);
@@ -87,7 +103,7 @@ int main(int argc, char *argv[]){
 	}else{
 
 		/* Improper amount of cmdline args entered, alert user */
-		printf("Usage: %s\n", argv[0]);
+		printf("\nUsage: %s\n\n", argv[0]);
 
 	}
 	/* End Cmdline args check */
